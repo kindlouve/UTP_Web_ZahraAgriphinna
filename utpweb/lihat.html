@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lihat Pengeluaran - Dompet Mahasiswa</title>
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const pengeluaranList = JSON.parse(localStorage.getItem('pengeluaran')) || [];
+      const pengeluaranTabel = document.getElementById('pengeluaran-list');
+
+      if (pengeluaranList.length === 0) {
+        pengeluaranTabel.innerHTML = '<tr><td colspan="5">Tidak ada pengeluaran yang tercatat.</td></tr>';
+      } else {
+        pengeluaranList.forEach((pengeluaran, index) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${pengeluaran.tanggal}</td>
+            <td>${pengeluaran.kategori}</td>
+            <td>Rp ${pengeluaran.jumlah}</td>
+            <td>${pengeluaran.deskripsi || '-'}</td>
+            <td><button class="hapus-btn" data-index="${index}">Hapus</button></td>;
+          pengeluaranTabel.appendChild(tr);
+        });
+
+        const hapusBtns = document.querySelectorAll('.hapus-btn');
+        hapusBtns.forEach(btn => {
+          btn.addEventListener('click', function () {
+            const index = this.getAttribute('data-index');
+            hapusPengeluaran(index);
+          });
+        });
+      }
+    });
+
+    function hapusPengeluaran(index) {
+      let pengeluaranList = JSON.parse(localStorage.getItem('pengeluaran')) || [];
+      pengeluaranList.splice(index, 1);
+      localStorage.setItem('pengeluaran', JSON.stringify(pengeluaranList));
+
+      location.reload();
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <h1>💰 Dompet Mahasiswa 💰</h1>
+    <nav>
+      <a href="index.html">Beranda</a>
+      <a href="catat.html">Catat</a>
+      <a href="lihat.html">Lihat</a>
+      <a href="tips.html">Tips</a>
+      <a href="tentang.html">Tentang</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Daftar Pengeluaran</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Tanggal</th>
+          <th>Kategori</th>
+          <th>Jumlah</th>
+          <th>Deskripsi</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="pengeluaran-list">
+        <!-- Pengeluaran akan muncul di sini -->
+      </tbody>
+    </table>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Dompet Mahasiswa - Dibuat oleh Zahra Agriphinna</p>
+  </footer>
+</body>
+</html>
