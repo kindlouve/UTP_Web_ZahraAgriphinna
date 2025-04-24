@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catat Pengeluaran - Dompet Mahasiswa</title>
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('pengeluaran-form');
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        
+        const kategori = document.getElementById('kategori').value;
+        const jumlah = document.getElementById('jumlah').value;
+        const deskripsi = document.getElementById('deskripsi').value;
+        const tanggal = new Date().toLocaleDateString();
+
+        const pengeluaran = {
+          tanggal: tanggal,
+          kategori: kategori,
+          jumlah: jumlah,
+          deskripsi: deskripsi
+        };
+
+        const pengeluaranList = JSON.parse(localStorage.getItem('pengeluaran')) || [];
+        pengeluaranList.push(pengeluaran);
+        localStorage.setItem('pengeluaran', JSON.stringify(pengeluaranList));
+
+        form.reset();
+        alert('Pengeluaran berhasil disimpan!');
+      });
+    });
+  </script>
+</head>
+<body>
+  <header>
+    <h1>💰 Dompet Mahasiswa 💰</h1>
+    <nav>
+      <a href="index.html">Beranda</a>
+      <a href="catat.html">Catat</a>
+      <a href="lihat.html">Lihat</a>
+      <a href="tips.html">Tips</a>
+      <a href="tentang.html">Tentang</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Catat Pengeluaranmu</h2>
+    <form id="pengeluaran-form">
+      <label for="kategori">Kategori:</label>
+      <select id="kategori" name="kategori">
+        <option value="makanan">Makanan</option>
+        <option value="transport">Transportasi</option>
+        <option value="hiburan">Hiburan</option>
+        <option value="kuliah">Kuliah</option>
+        <option value="lainnya">Lainnya</option>
+      </select>
+
+      <label for="jumlah">Jumlah (Rp):</label>
+      <input type="number" id="jumlah" name="jumlah" required />
+
+      <label for="deskripsi">Deskripsi (Opsional):</label>
+      <textarea id="deskripsi" name="deskripsi"></textarea>
+
+      <button type="submit">Simpan Pengeluaran</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Dompet Mahasiswa - Dibuat oleh Zahra Agriphinna</p>
+  </footer>
+</body>
+</html>
