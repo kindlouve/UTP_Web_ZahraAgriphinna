@@ -20,7 +20,8 @@
             <td>${pengeluaran.kategori}</td>
             <td>Rp ${pengeluaran.jumlah}</td>
             <td>${pengeluaran.deskripsi || '-'}</td>
-            <td><button class="hapus-btn" data-index="${index}">Hapus</button></td>;
+            <td><button class="hapus-btn" data-index="${index}">Hapus</button></td>
+          `;
           pengeluaranTabel.appendChild(tr);
         });
 
@@ -38,7 +39,6 @@
       let pengeluaranList = JSON.parse(localStorage.getItem('pengeluaran')) || [];
       pengeluaranList.splice(index, 1);
       localStorage.setItem('pengeluaran', JSON.stringify(pengeluaranList));
-
       location.reload();
     }
   </script>
@@ -64,7 +64,7 @@
           <th>Kategori</th>
           <th>Jumlah</th>
           <th>Deskripsi</th>
-          <th></th>
+          <th>Aksi</th>
         </tr>
       </thead>
       <tbody id="pengeluaran-list">
